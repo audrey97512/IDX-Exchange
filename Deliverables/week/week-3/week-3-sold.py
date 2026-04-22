@@ -1,7 +1,7 @@
 # %%
 import pandas as pd
 import numpy as np
-df = pd.read_csv("CRMLSSold_residential.csv")
+df = pd.read_csv("CRMLSSold_with_rates.csv")
 print("SOLD shape:", df.shape)
 
 # %%
@@ -54,7 +54,7 @@ extra_drop = [
     "BuyerAgentFirstName", "BuyerAgentLastName",
     "CoListAgentFirstName", "CoListAgentLastName",
     "ListOfficeName", "BuyerOfficeName", "CoListOfficeName",
-    "BuyerOfficeAOR","BuyerAgencyCompensationType",
+    "BuyerOfficeAOR","BuyerAgencyCompensationType","BuyerAgencyCompensation"
  
     
 ]
@@ -65,10 +65,9 @@ num_extra = len(extra_drop)
 all_drop = list(set(high_missing_cols + extra_drop))
 
 # delete
-before_all = df.shape[1]
-df_sold_clean = df.drop(columns=all_drop, errors="ignore")
+before_all = df_sold_clean.shape[1]
+df_sold_clean = df_sold_clean.drop(columns=extra_drop, errors="ignore")
 after_all = df_sold_clean.shape[1]
-
 
 # 5. summary
 # =========================
@@ -79,5 +78,5 @@ print(f"Extra columns removed: {num_extra}")
 print(f"Total unique columns removed: {len(all_drop)}")
 print(f"Remaining columns: {after_all}")
 
-# %%
-df_sold_clean.to_csv("CRMLSSold_final.csv", index=False)
+
+
